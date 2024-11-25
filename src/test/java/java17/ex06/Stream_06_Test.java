@@ -36,10 +36,11 @@ public class Stream_06_Test {
     // TODO compléter la méthode pour que le calcul de la somme soit fait avec une instance d'Accumulator
     private long sumWithAccumulator(long n) {
         // TODO créer une instance de l'accumulateur (classe Accumulator)
-        Accumulator acc = null;
+        Accumulator acc = new Accumulator();
         LongStream longStream = LongStream.rangeClosed(1, n - 1);
 
         // TODO pour chaque élément de longStream, invoquer la méthode add de l'accumulateur (acc)
+        longStream.forEach(val->acc.add(val));
 
         return acc.total;
     }
@@ -58,11 +59,17 @@ public class Stream_06_Test {
 
     // TODO reprendre le code de sumWithAccumulator et rendre le traitement parallèle (.parallel())
     private long sumWithAccumulatorParallel(long n) {
-        return 0;
+        Accumulator acc = new Accumulator();
+        LongStream longStream = LongStream.rangeClosed(1, n - 1);
+
+        
+        longStream.parallel().forEach(acc::add);
+        return acc.total;
     }
 
     // TODO Exécuter le test
     // Que constatez-vous ?
+    /*le resultat de test varie selon les executions est n'est jamais passant pour n >=1000 */
     @Test
     public void test_sumWithAccumulatorParallel() throws Exception {
 
